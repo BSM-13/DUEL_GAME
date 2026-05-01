@@ -29,7 +29,7 @@ def battle(firstCharacter, secondCharacter):
 
     damageTaken,usedAbilityDefense = secondCharacter.ability.activation(secondCharacter,damageGiven,is_attacker=False)
 
-    secondCharacter.health -= damageTaken
+    secondCharacter.health = max(0, secondCharacter.health - damageTaken)
 
 
     if  usedAbilityAttack is not True and usedAbilityDefense is not True :
@@ -71,7 +71,7 @@ def duel(x = None,y = None, perRound = None):
 
     roundnum = 1
 
-    while c1.health > 0 and c2.health > 0:
+    while True:
         #After the 100th round we declare stalemate
         if roundnum > 100:
             Output.output("REMIZA!")
