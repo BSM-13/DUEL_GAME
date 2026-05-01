@@ -74,7 +74,7 @@ def duel(x = None,y = None, perRound = None):
     while True:
         #After the 100th round we declare stalemate
         if roundnum > 100:
-            Output.output("REMIZA!")
+            Output.output("STALEMATE!")
             return 0
         Output.output(f"ROUND {roundnum}:")
         roundnum+=1
@@ -120,6 +120,8 @@ def characterStatsInput():
     dfs = int(input("Character 1 defense power: "))
     print("Ability list: 1.Damage Reduction, 2.Power Strike, 3.Second Wind, 4.THE FOURTH ABILITY (enter the number)")
     ability_choice = input("Character 1 ability: ")
+    if ability_choice not in abilities:
+        print("Invalid choice, picking a random ability...")
     randomKey = random.choice(list(abilities.keys()))
     c1.ability = abilities.get(ability_choice,abilities[randomKey])
 
@@ -132,6 +134,8 @@ def characterStatsInput():
     c2.attackpwr = pwr
     c2.defpwr = dfs
     ability_choice = input("Character 2 ability: ")
+    if ability_choice not in abilities:
+        print("Invalid choice, picking a random ability...")
     randomKey = random.choice(list(abilities.keys()))
     c2.ability = abilities.get(ability_choice,abilities[randomKey])
 
@@ -154,9 +158,9 @@ def menu():
     print("2. Test Win Rates")
     print("3. Exit")
     print("--per-round - toggle between fixed and per-round ability assignment")
-    comanda = input()
+    command = input()
 
-    match comanda:
+    match command:
         case "1":
             print("Duel")
             duel(None,None,perRound)
@@ -178,7 +182,7 @@ def menu():
 
             firstCharacterWins = 0
             secondCharacterWins = 0
-            remize = 0
+            stalemates = 0
             while counter <= 1000:
                 winner = duel(c1,c2,perRound)
                 c1.health = 100
@@ -188,14 +192,15 @@ def menu():
                 elif winner == 2:
                     secondCharacterWins += 1
                 elif winner == 0:
-                    remize +=1
+                    stalemates +=1
                 counter +=1
 
             print("RESULT")
             print(f"The first character has {firstCharacterWins} wins")
             print(f"The second character has {secondCharacterWins} wins")
-            print(f"There were {remize} stalemates")
-            print(f"Percentages: Character 1: {firstCharacterWins/10}%, Character 2: {secondCharacterWins/10}%, Stalemates: {remize/10}")
+            print(f"There were {stalemates} stalemates")
+            print(f"Percentages: Character 1: {firstCharacterWins/10}%, Character 2: {secondCharacterWins/10}%, Stalemates: {stalemates/10}")
+
             if Output.printChoice == 2:
                 Output.file.close()
 
