@@ -151,65 +151,64 @@ def menu():
     args = parser.parse_args()
     perRound = args.per_round
 
-
-    print("Duel Game!")
-    print("Menu: ")
-    print("1. Duel")
-    print("2. Test Win Rates")
-    print("3. Exit")
     print("--per-round - toggle between fixed and per-round ability assignment")
-    command = input()
+    print("Duel Game!")
+    while(True):
+        print("Menu: ")
+        print("1. Duel")
+        print("2. Test Win Rates")
+        print("3. Exit")
+        command = input()
 
-    match command:
-        case "1":
-            print("Duel")
-            duel(None,None,perRound)
-        case "2":
-            print("Where to print the battles: (enter the number)")
-            print("1. Console")
-            print("2. txt file within the main folder (if it already exists it will be overwritten)")
-            print("3. Don't print")
-            Output.printChoice = int(input())
+        match command:
+            case "1":
+                print("Duel")
+                duel(None,None,perRound)
+            case "2":
+                print("Where to print the battles: (enter the number)")
+                print("1. Console")
+                print("2. txt file within the main folder (if it already exists it will be overwritten)")
+                print("3. Don't print")
+                Output.printChoice = int(input())
 
-            if Output.printChoice == 2:
-                Output.file = open("Battles.txt","w")
+                if Output.printChoice == 2:
+                    Output.file = open("Battles.txt","w")
 
 
 
-            print("Test Win Rates")
-            c1,c2 = characterStatsInput()
-            counter = 1
+                print("Test Win Rates")
+                c1,c2 = characterStatsInput()
+                counter = 1
 
-            firstCharacterWins = 0
-            secondCharacterWins = 0
-            stalemates = 0
-            while counter <= 1000:
-                winner = duel(c1,c2,perRound)
-                c1.health = 100
-                c2.health = 100
-                if winner == 1:
-                    firstCharacterWins += 1
-                elif winner == 2:
-                    secondCharacterWins += 1
-                elif winner == 0:
-                    stalemates +=1
-                counter +=1
+                firstCharacterWins = 0
+                secondCharacterWins = 0
+                stalemates = 0
+                while counter <= 1000:
+                    winner = duel(c1,c2,perRound)
+                    c1.health = 100
+                    c2.health = 100
+                    if winner == 1:
+                        firstCharacterWins += 1
+                    elif winner == 2:
+                        secondCharacterWins += 1
+                    elif winner == 0:
+                        stalemates +=1
+                    counter +=1
 
-            print("RESULT")
-            print(f"The first character has {firstCharacterWins} wins")
-            print(f"The second character has {secondCharacterWins} wins")
-            print(f"There were {stalemates} stalemates")
-            print(f"Percentages: Character 1: {firstCharacterWins/10}%, Character 2: {secondCharacterWins/10}%, Stalemates: {stalemates/10}")
+                print("RESULT")
+                print(f"The first character has {firstCharacterWins} wins")
+                print(f"The second character has {secondCharacterWins} wins")
+                print(f"There were {stalemates} stalemates")
+                print(f"Percentages: Character 1: {firstCharacterWins/10}%, Character 2: {secondCharacterWins/10}%, Stalemates: {stalemates/10}")
 
-            if Output.printChoice == 2:
-                Output.file.close()
+                if Output.printChoice == 2:
+                    Output.file.close()
 
-        case "3":
-            print("Exiting")
-            return
-        case _:
-            print("Invalid input")
-            return
+            case "3":
+                print("Exiting")
+                return
+            case _:
+                print("Invalid input")
 
 
 
